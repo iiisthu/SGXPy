@@ -1,0 +1,6 @@
+*.log*
+*.sgx
+*.manifest
+*.pyc
+*.sig
+*.token

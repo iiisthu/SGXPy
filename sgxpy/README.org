@@ -1,0 +1,3 @@
+* A Python Runtime Environment for Intel SGX
+
+Detect runtime dependent files automatically and build the process tree for a py script to meet Graphene-SGX(lightweight guest OS)

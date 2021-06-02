@@ -1,0 +1,9 @@
+* Numpy
+
+** numpy patch
+对numpy的测试在版本1.14.5上执行通过，由于较新版本的numpy更改了测试框架(nose -> unittests)，所以版本号大于1.14.5的numpy可能无法通过测试。
+
+因为开源内核Graphene并未实现所有的POSIX接口，所以在执行测试前，需应用补丁文件：sgxpy/numpy/0001-numpy-patch-for-sgxpy.patch。
+补丁文件使用 *git format-patch* 生成，应用时使用 *git am* 命令。
+** python lib patch
+   本系统还对python 系统库文件（/usr/lib/python2.7）打了补丁，补丁文件位于：sgxpy/numpy/0001-python-lib-patch-for-sgxpy.patch。

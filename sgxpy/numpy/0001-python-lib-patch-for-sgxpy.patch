@@ -1,0 +1,38 @@
+From a492fb0cf4bab2aed16944ae0a979b3345e4cd18 Mon Sep 17 00:00:00 2001
+From: root <zhang.denghui@foxmail.com>
+Date: Fri, 1 Feb 2019 02:28:35 +0800
+Subject: [PATCH] python lib patch for sgxpy
+
+---
+ platform.py | 2 +-
+ zipfile.py  | 1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/platform.py b/platform.py
+index 5e4db4b..fc3a753 100755
+--- a/platform.py
++++ b/platform.py
+@@ -1157,7 +1157,7 @@ def uname():
+     if _uname_cache is not None:
+         return _uname_cache
+ 
+-    processor = ''
++    processor = 'x86_64'
+ 
+     # Get some infos from the builtin os.uname API...
+     try:
+diff --git a/zipfile.py b/zipfile.py
+index 7061cfa..d69fbfd 100644
+--- a/zipfile.py
++++ b/zipfile.py
+@@ -1365,6 +1365,7 @@ class ZipFile(object):
+                 self.fp.write(endrec)
+                 self.fp.write(self._comment)
+                 self.fp.flush()
++                self.fp.truncate(self.fp.tell())
+ 
+         finally:
+             fp = self.fp
+-- 
+2.7.4
+

@@ -1,0 +1,13 @@
+* 应用测试（以ZJH 日志页面为例）
+
+** 生成配置文件
+
+#+BEGIN_SRC shell
+./setup.sh
+#+END_SRC
+由于Python的HttpServer 模块不会自动退出，所以需要按两下Ctrl-C强制退出。
+** 运行
+#+BEGIN_SRC shell
+./python.manifest.sgx `pwd`/httpserver.py
+#+END_SRC
+如果更改任一静态页面（html, css, js），则测试网站无法正常访问。同时，性能图片未被加入到配置文件中，所以点击 *性能* 链接时，显示无此项数据。

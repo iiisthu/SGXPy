@@ -1,0 +1,75 @@
+From 3b4d843e7b4496e2642bebab5b07eeccc67b9b0d Mon Sep 17 00:00:00 2001
+From: zdh <zhang.denghui@foxmail.com>
+Date: Fri, 1 Feb 2019 02:07:34 +0800
+Subject: [PATCH] numpy patch for sgxpy
+
+---
+ core/tests/test_extint128.py  | 2 +-
+ core/tests/test_regression.py | 1 +
+ lib/tests/test_format.py      | 1 +
+ linalg/tests/test_linalg.py   | 5 +++--
+ 4 files changed, 6 insertions(+), 3 deletions(-)
+
+diff --git a/core/tests/test_extint128.py b/core/tests/test_extint128.py
+index d87585d..f5848ab 100644
+--- a/core/tests/test_extint128.py
++++ b/core/tests/test_extint128.py
+@@ -9,7 +9,7 @@ import numpy as np
+ import numpy.core.multiarray_tests as mt
+ from numpy.compat import long
+ 
+-from numpy.testing import assert_raises, assert_equal, dec
++from numpy.testing import assert_raises, assert_equal, dec, run_module_suite
+ 
+ 
+ INT64_MAX = np.iinfo(np.int64).max
+diff --git a/core/tests/test_regression.py b/core/tests/test_regression.py
+index 52793d4..2ff9491 100644
+--- a/core/tests/test_regression.py
++++ b/core/tests/test_regression.py
+@@ -1930,6 +1930,7 @@ class TestRegression(object):
+         a[...] = [[1, 2]]
+         assert_equal(a, [[1, 2], [1, 2]])
+ 
++    @dec.knownfailureif (True, "Ignore all memory tests")
+     def test_memoryleak(self):
+         # Ticket #1917 - ensure that array data doesn't leak
+         for i in range(1000):
+diff --git a/lib/tests/test_format.py b/lib/tests/test_format.py
+index 2d2b4ce..e2783fe 100644
+--- a/lib/tests/test_format.py
++++ b/lib/tests/test_format.py
+@@ -807,6 +807,7 @@ def test_bad_header():
+     assert_raises(ValueError, format.read_array_header_1_0, s)
+ 
+ 
++@dec.knownfailureif (True, "Ignore all large file tests")
+ def test_large_file_support():
+     if (sys.platform == 'win32' or sys.platform == 'cygwin'):
+         raise SkipTest("Unknown if Windows has sparse filesystems")
+diff --git a/linalg/tests/test_linalg.py b/linalg/tests/test_linalg.py
+index 84087a8..969ad4b 100644
+--- a/linalg/tests/test_linalg.py
++++ b/linalg/tests/test_linalg.py
+@@ -1602,8 +1602,8 @@ def test_xerbla_override():
+         os.close(1)
+         os.close(0)
+         # Avoid producing core files.
+-        import resource
+-        resource.setrlimit(resource.RLIMIT_CORE, (0, 0))
++        # import resource
++        # resource.setrlimit(resource.RLIMIT_CORE, (0, 0))
+         # These calls may abort.
+         try:
+             np.linalg.lapack_lite.xerbla()
+@@ -1633,6 +1633,7 @@ def test_xerbla_override():
+             raise SkipTest('Numpy xerbla not linked in.')
+ 
+ 
++@dec.skipif (True, "Ignore subprocess tests")
+ def test_sdot_bug_8577():
+     # Regression test that loading certain other libraries does not
+     # result to wrong results in float32 linear algebra.
+-- 
+2.7.4
+
